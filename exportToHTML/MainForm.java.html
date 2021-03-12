@@ -1,0 +1,94 @@
+<html>
+<head>
+<title>MainForm.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #597cc2;}
+.s1 { color: #aeb5bd;}
+.s2 { color: #267dff;}
+.s3 { color: #7a7a7a;}
+.s4 { color: #807d6e; font-weight: bold;}
+.s5 { color: #5c7ab8;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+MainForm.java</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s1">javax.swing.*</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.awt.event.*</span><span class="s0">;</span>
+
+
+
+<span class="s0">public class </span><span class="s1">MainForm </span><span class="s0">extends </span><span class="s1">JFrame{</span>
+    <span class="s0">private </span><span class="s1">JTextField textFieldMiles</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">JButton convertToKmButton</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">JTextField textFieldKilometers</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">JButton convertToMlButton</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">JPanel mainPanel</span><span class="s0">;</span>
+
+    <span class="s0">public static final float </span><span class="s1">KMS_IN_A_MILE = </span><span class="s2">1.60934f</span><span class="s0">;</span>
+
+    <span class="s0">public </span><span class="s1">MainForm (String title){</span>
+        <span class="s3">//super(title);</span>
+        <span class="s1">setTitle(title)</span><span class="s0">;</span>
+        <span class="s1">setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)</span><span class="s0">;</span>
+        <span class="s1">setContentPane(mainPanel)</span><span class="s0">;</span>
+        <span class="s1">pack()</span><span class="s0">; </span><span class="s3">//Ajusta el tamaño del marco al contenido del panel principal</span>
+
+        <span class="s1">convertToKmButton.addActionListener(</span><span class="s0">new </span><span class="s1">ActionListener() {</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">actionPerformed(ActionEvent e) {</span>
+                <span class="s1">String text = textFieldMiles.getText()</span><span class="s0">;</span>
+                <span class="s0">float </span><span class="s1">miles = </span><span class="s2">0</span><span class="s0">;</span>
+                <span class="s0">try </span><span class="s1">{</span>
+                    <span class="s1">miles = Float.parseFloat(text)</span><span class="s0">;</span>
+                <span class="s1">}</span><span class="s0">catch </span><span class="s1">(NumberFormatException ex){</span>
+
+                <span class="s1">}</span>
+                <span class="s0">float </span><span class="s1">kms = convertMilesToKms(miles)</span><span class="s0">;</span>
+                <span class="s1">String kmsStr = String.format(</span><span class="s4">&quot;%.4f&quot;</span><span class="s5">,</span><span class="s1">kms)</span><span class="s0">;</span>
+                <span class="s1">textFieldKilometers.setText(kmsStr)</span><span class="s0">;</span>
+
+            <span class="s1">}</span>
+        <span class="s1">})</span><span class="s0">;</span>
+
+
+        <span class="s1">convertToMlButton.addActionListener(</span><span class="s0">new </span><span class="s1">ActionListener() {</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">actionPerformed(ActionEvent e) {</span>
+                <span class="s1">String text = textFieldKilometers.getText()</span><span class="s0">;</span>
+                <span class="s0">float </span><span class="s1">kilometeres = </span><span class="s2">0</span><span class="s0">;</span>
+                <span class="s0">try </span><span class="s1">{</span>
+                    <span class="s1">kilometeres = Float.parseFloat(text)</span><span class="s0">;</span>
+                <span class="s1">}</span><span class="s0">catch </span><span class="s1">(NumberFormatException ex){</span>
+
+                <span class="s1">}</span>
+                <span class="s0">float </span><span class="s1">miles = convertKmsToMiles(kilometeres)</span><span class="s0">;</span>
+                <span class="s1">String milesStr = String.format(</span><span class="s4">&quot;%.4f&quot;</span><span class="s5">,</span><span class="s1">miles)</span><span class="s0">;</span>
+                <span class="s1">textFieldMiles.setText(milesStr)</span><span class="s0">;</span>
+            <span class="s1">}</span>
+        <span class="s1">})</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private float </span><span class="s1">convertKmsToMiles(</span><span class="s0">float </span><span class="s1">kilometeres) {</span>
+        <span class="s0">return </span><span class="s1">kilometeres / KMS_IN_A_MILE</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private float </span><span class="s1">convertMilesToKms(</span><span class="s0">float </span><span class="s1">miles) {</span>
+        <span class="s0">return </span><span class="s1">miles * KMS_IN_A_MILE</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public static void </span><span class="s1">main(String[] args) {</span>
+
+        <span class="s1">MainForm miframe = </span><span class="s0">new </span><span class="s1">MainForm(</span><span class="s4">&quot;Converter&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">miframe.setVisible(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">miframe.setLocation(</span><span class="s2">500</span><span class="s5">,</span><span class="s2">400</span><span class="s1">)</span><span class="s0">;</span>
+
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>
