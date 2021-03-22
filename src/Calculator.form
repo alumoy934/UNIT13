@@ -7,7 +7,7 @@
     <properties/>
     <border type="none"/>
     <children>
-      <component id="fe040" class="javax.swing.JButton" binding="a1Button" default-binding="true">
+      <component id="fe040" class="javax.swing.JButton" binding="Button1">
         <constraints>
           <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
           <gridbag weightx="0.0" weighty="0.0"/>
@@ -16,7 +16,7 @@
           <text value="1"/>
         </properties>
       </component>
-      <component id="8f50e" class="javax.swing.JButton" binding="a2Button" default-binding="true">
+      <component id="8f50e" class="javax.swing.JButton" binding="Button2">
         <constraints>
           <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
           <gridbag weightx="0.0" weighty="0.0"/>
@@ -25,7 +25,7 @@
           <text value="2"/>
         </properties>
       </component>
-      <component id="13e20" class="javax.swing.JButton" binding="a3Button" default-binding="true">
+      <component id="13e20" class="javax.swing.JButton" binding="Button3">
         <constraints>
           <grid row="4" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
           <gridbag weightx="0.0" weighty="0.0"/>
@@ -34,7 +34,7 @@
           <text value="3"/>
         </properties>
       </component>
-      <component id="86ed6" class="javax.swing.JButton" binding="buttonsuma">
+      <component id="86ed6" class="javax.swing.JButton" binding="buttonAdd">
         <constraints>
           <grid row="4" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
           <gridbag weightx="0.0" weighty="0.0"/>
@@ -70,7 +70,7 @@
           <text value="6"/>
         </properties>
       </component>
-      <component id="eb6c3" class="javax.swing.JButton" binding="buttonmenos">
+      <component id="eb6c3" class="javax.swing.JButton" binding="buttonSubtract">
         <constraints>
           <grid row="6" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
           <gridbag weightx="0.0" weighty="0.0"/>
@@ -106,7 +106,7 @@
           <text value="9"/>
         </properties>
       </component>
-      <component id="6ed2f" class="javax.swing.JButton" binding="buttonmultiplicar">
+      <component id="6ed2f" class="javax.swing.JButton" binding="buttonMult">
         <constraints>
           <grid row="8" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
           <gridbag weightx="0.0" weighty="0.0"/>
@@ -115,7 +115,7 @@
           <text value="*"/>
         </properties>
       </component>
-      <component id="d58c5" class="javax.swing.JButton" binding="buttoncoma">
+      <component id="d58c5" class="javax.swing.JButton" binding="buttonComma">
         <constraints>
           <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
           <gridbag weightx="0.0" weighty="0.0"/>
@@ -142,7 +142,7 @@
           <text value="C"/>
         </properties>
       </component>
-      <component id="b97ca" class="javax.swing.JButton" binding="buttondividir">
+      <component id="b97ca" class="javax.swing.JButton" binding="buttonDiv">
         <constraints>
           <grid row="10" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
           <gridbag weightx="0.0" weighty="0.0"/>
@@ -151,7 +151,7 @@
           <text value="/"/>
         </properties>
       </component>
-      <component id="44c1d" class="javax.swing.JButton" binding="buttonigual">
+      <component id="44c1d" class="javax.swing.JButton" binding="buttonEqual">
         <constraints>
           <grid row="12" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
           <gridbag weightx="0.0" weighty="0.0"/>
@@ -214,7 +214,7 @@
           <gridbag weightx="0.0" weighty="0.0"/>
         </constraints>
       </hspacer>
-      <component id="d6506" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+      <component id="d6506" class="javax.swing.JTextField" binding="textFieldDisplay">
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="7" vsize-policy="0" hsize-policy="6" anchor="1" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
@@ -223,7 +223,7 @@
         </constraints>
         <properties/>
       </component>
-      <component id="82af5" class="javax.swing.JButton" binding="buttonborrar">
+      <component id="82af5" class="javax.swing.JButton" binding="buttonBack">
         <constraints>
           <grid row="12" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
           <gridbag weightx="0.0" weighty="0.0"/>
