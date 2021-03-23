@@ -10,6 +10,7 @@ public class MainForm2 extends JFrame{
         setLocationRelativeTo(null);
         setJMenuBar(createMenuBar());
 
+
     }
 
     private JMenuBar createMenuBar() {
