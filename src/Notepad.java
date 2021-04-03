@@ -1,124 +1,166 @@
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
-public class Notepad extends JFrame {
+public class Notepad extends JFrame{
+    private JPanel panel1;
+    private JButton buttonSave;
+    private JButton buttonLoad;
+    private JTextArea textArea;
 
-    public Notepad(){
+    public Notepad(String s){
+        super("Notepad");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("Notepad CutreVersion 1.0");
-        setSize(850,650);
-        setLocationRelativeTo(null);
+        panel1.setPreferredSize(new Dimension(500,500));
+        setContentPane(panel1);
         pack();
 
-
-        JPanel basic = new JPanel();
-        basic.setLayout(new BoxLayout(basic,BoxLayout.Y_AXIS));
-        add(basic);
-
         setJMenuBar(createMenuBar());
-
-        basic.add(createToolBar());
-        basic.add(createArea());
-
-    }// constructor
-
-    private Component createArea() {
-        JTextArea textArea = new JTextArea("Text Area");
-        return textArea;
     }
-
 
     private JMenuBar createMenuBar() {
         JMenuBar menuBar = new JMenuBar();
         menuBar.add(createFileMenu());
         menuBar.add(createEditMenu());
+        menuBar.add(new JSeparator());
+        menuBar.add(creatwHelpMenu());
         return menuBar;
-    }
 
-    private JMenu createFileMenu() {
-        JMenu fileMenu = new JMenu("Fichero");
-        fileMenu.setMnemonic(KeyEvent.VK_F);
-        ImageIcon iconNew = new ImageIcon("new.png");
-        JMenuItem newItem = new JMenuItem("New", iconNew);
-        newItem.setMnemonic(KeyEvent.VK_N);
-        fileMenu.add(newItem);
-
-        ImageIcon iconOpen = new ImageIcon("open.png");
-        JMenuItem openItem = new JMenuItem("Abrir fichero...",iconOpen);
-        openItem.setMnemonic(KeyEvent.VK_A);
-        fileMenu.add(openItem);
-
-        ImageIcon iconSave = new ImageIcon("Save.png");
-        JMenuItem saveItem = new JMenuItem("Guardar", iconSave);
-        saveItem.setMnemonic(KeyEvent.VK_G);
-        fileMenu.add(saveItem);
-
-        JSeparator separator = new JSeparator();
-        separator.setForeground(Color.BLACK);
-        fileMenu.add(separator);
-
-        ImageIcon iconExit = new ImageIcon("exit.png");
-        JMenuItem exitItem = new JMenuItem("Salir", iconExit);
-        exitItem.setMnemonic(KeyEvent.VK_S);
-        fileMenu.add(exitItem);
-
-        exitItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Ha salido del programa correctamente");
-                System.exit(0);
-            }
-        });
-
-        return fileMenu;
     }
 
     private JMenu createEditMenu() {
-        JMenu editMenu = new JMenu("Editar");
-        editMenu.setMnemonic(KeyEvent.VK_E);
-
-        ImageIcon cutIcon = new ImageIcon("cut.png");
-        JMenuItem cutItem = new JMenuItem("Cortar", cutIcon);
-        cutItem.setMnemonic(KeyEvent.VK_C);
-        editMenu.add(cutItem);
-
-        ImageIcon copyIcon = new ImageIcon("copy.png");
-        JMenuItem copyItem = new JMenuItem("Copiar",copyIcon);
-        copyItem.setMnemonic(KeyEvent.VK_P);
+        JMenu editMenu = new JMenu("Edit");
+        JMenuItem undoItem = new JMenuItem("Undo");
+        editMenu.add(undoItem);
+        JMenuItem redoItem = new JMenuItem("Redo");
+        editMenu.add(redoItem);
+        JMenuItem copyItem = new JMenuItem("Copy");
         editMenu.add(copyItem);
-
-        ImageIcon pasteIcon = new ImageIcon("paste.png");
-        JMenuItem pasteItem = new JMenuItem("Pegar", pasteIcon);
-        pasteItem.setMnemonic(KeyEvent.VK_P);
+        JMenuItem cutItem = new JMenuItem("Cut");
+        editMenu.add(cutItem);
+        JMenuItem pasteItem = new JMenuItem("Paste");
         editMenu.add(pasteItem);
+
+        undoItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (undoManager.canUndo()) {
+                    undoManager.undo();
+                }
+            }
+        });
+        redoItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (undoManager.canRedo()) {
+                    undoManager.redo();
+                }
+            }
+        });
+        copyItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                textArea.copy();
+            }
+        });
+        cutItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                textArea.cut();
+            }
+        });
+        pasteItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                textArea.paste();
+            }
+        });
         return editMenu;
     }
+    private JMenu createFileMenu() {
+        JMenu fileMenu = new JMenu("File");
+        fileMenu.setMnemonic(KeyEvent.VK_F);
+        fileMenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F,ActionEvent.CTRL_MASK));
 
-    private JToolBar createToolBar(){
-        JToolBar toolBar = new JToolBar();
-        JButton guardar = new JButton("Guardar"); // sólo icono sin texto
-        toolBar.add(guardar);
+        JMenuItem newItem = new JMenuItem("New");
+        newItem.setIcon(new ImageIcon("new.png"));
+        newItem.setMnemonic(KeyEvent.VK_N);
+        newItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,ActionEvent.CTRL_MASK));
+        fileMenu.add(newItem);
 
-        JButton cargar = new JButton("Cargar"); // sólo icono sin texto
-        toolBar.add(guardar);
-        toolBar.add(cargar);
-        toolBar.setAlignmentX(0);
-        toolBar.setBorder(new EmptyBorder(new Insets(15,0,0,0)));
-        return toolBar;
+        JMenuItem openItem = new JMenuItem("Open ...");
+        openItem.setIcon(new ImageIcon("open.png"));
+        openItem.setMnemonic(KeyEvent.VK_O);
+        openItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,ActionEvent.CTRL_MASK));
+        fileMenu.add(openItem);
+
+        JMenuItem saveItem = new JMenuItem("Save ");
+        saveItem.setIcon(new ImageIcon("save.png"));
+        saveItem.setMnemonic(KeyEvent.VK_S);
+        saveItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,ActionEvent.CTRL_MASK));
+        fileMenu.add(saveItem);
+
+        fileMenu.add(new JSeparator());
+
+        JMenuItem exitItem = new JMenuItem("Exit");
+        exitItem.setIcon(new ImageIcon("exit.png"));
+        exitItem.setMnemonic(KeyEvent.VK_E);
+        exitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,ActionEvent.CTRL_MASK));
+        fileMenu.add(exitItem);
+
+        newItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                newFile();
+            }
+        });
+        openItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                load();
+            }
+        });
+        saveItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                save();
+            }
+        });
+        exitItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+        return fileMenu;
+    }
+    private JMenu creatwHelpMenu() {
+        JMenu helpMenu = new JMenu("Help");
+        JMenuItem aboutItem = new JMenuItem("About ...");
+        helpMenu.add(aboutItem);
+        /*aboutItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AboutDialog dialog = new AboutDialog();
+                dialog.pack();
+                dialog.setVisible(true);
+            }
+        });*/
+        return helpMenu;
     }
 
 
-    public static void main(String[] args) {
+    public static void main (String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                Notepad note = new Notepad();
-                note.setVisible(true);
+                Notepad notepad = new Notepad("My notepad");
+                notepad.setVisible(true);
             }
         });
     }
+
 }
+
