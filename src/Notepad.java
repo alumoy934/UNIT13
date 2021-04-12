@@ -1,9 +1,12 @@
 import javax.swing.*;
+import javax.swing.event.UndoableEditEvent;
+import javax.swing.event.UndoableEditListener;
 import javax.swing.undo.UndoManager;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import javax.swing.undo.UndoManager;
 import java.io.*;
 
 public class Notepad extends JFrame{
@@ -11,7 +14,7 @@ public class Notepad extends JFrame{
     private JButton buttonSave;
     private JButton buttonLoad;
     private JTextArea textArea;
-    UndoManager undoManager;
+    private UndoManager undoManager;
 
     public Notepad(String s){
         super("Notepad");
@@ -21,8 +24,35 @@ public class Notepad extends JFrame{
         pack();
 
         setJMenuBar(createMenuBar());
+        myInit();
+
     }
 
+    private void myInit() {
+        undoManager = new UndoManager();
+        textArea.getDocument().addUndoableEditListener(new UndoableEditListener() {
+            @Override
+            public void undoableEditHappened(UndoableEditEvent e) {
+                undoManager.addEdit(e.getEdit());
+            }
+        });
+        buttonSave.setIcon(new ImageIcon("Save.png"));
+        buttonLoad.setIcon(new ImageIcon("open.png"));
+        buttonSave.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                save();
+            }
+        });
+
+        buttonLoad.addActionListener((new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                load();
+            }
+        }));
+
+    }
     private JMenuBar createMenuBar() {
         JMenuBar menuBar = new JMenuBar();
         menuBar.add(createFileMenu());
